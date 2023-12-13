@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/ditail_4.css' %}">
+<body>
+    <div class="pagination">
+{#        <p>Home > Shop > Women > Jacket </p>#}
+    </div>
+    <!-- product section -->
+    <section class="product-container">
+        <!-- left side -->
+        <div class="img-card">
+            <img src="{{ product.photo.url }}" alt="" id="featured-image">
+            <!-- small img -->
+            {% if product.video %}
+            <div class="small-Card">
+{#                <img src="" alt="" class="small-Img">#}
+                <iframe src="{{ product.video }}" class="small-Img" title="Vimeo video" allowfullscreen></iframe>
+            </div>
+            {% endif %}
+        </div>
+        <!-- Right side -->
+        <div class="product-info">
+            <h3>{{ product.name }} {{ product.model }}</h3>
+            <h5>Price: {{ product.amount }}{{ product.currency }} </h5>
+{#            <h5>Price: {{ product.amount }}{{ product.currency }} <del>$170</del></h5>#}
+            <h5 style="color: #0f172a">Rate: {{ product.rate }} </h5>
+        <br>
+            <h5 style="color: #0f172a">Color: {{ product.color }} </h5>
+
+
+            <div class="sizes">
+                <p>Size:</p>
+                <select name="Size" id="size" class="size-option">
+                    {% if product.size %}
+                        <option value="xxl">{{ product.size }}</option>
+                    {% else %}
+                        <option value="xxl">No size</option>
+                    {% endif %}
+{#                    <option value="xl">XL</option>#}
+{#                    <option value="medium">Medium</option>#}
+{#                    <option value="small">Small</option>#}
+                </select>
+            </div>
+
+            <div class="quantity">
+                {% if request.user.profile.category == 'SALESMAN' and product.owner == request.user %}
+                    <a class="ditail_button" href="{% url 'products:update' product.pk %}">Update Item</a>
+                    <a class="ditail_button" href="{% url 'products:delete' product.pk %}">Delete Item</a>
+                {% else %}
+                    <input type="number" value="1" min="1">
+                    <a class="ditail_button" href="{% url 'cart:add_to_cart' product.pk %}">Add to Cart</a>
+{#                <button><a href="{% url 'cart:add_to_cart' product.pk %}">Add to Cart</a></button>#}
+                {% endif %}
+            </div>
+
+            <div>
+                <p>Description:</p>
+                <p>{{ product.description }}</p>
+                {% if product.brand.name %}
+                 <div class="delivery">
+                    <p>Brand Name</p> <p>{{ product.brand.name }}</p>
+                </div>
+                {% endif %}
+
+{#                <div class="delivery">#}
+{#                    <p>TYPE</p> <p>HOW LONG</p> <p>HOW MUCH</p>#}
+{#                </div>#}
+{#                <hr>#}
+{#                <div class="delivery">#}
+{#                    <p>Standard delivery</p>#}
+{#                    <p>1-4 business days</p>#}
+{#                    <p>$4.50</p>#}
+{#                </div>#}
+{#                <hr>#}
+{#                <div class="delivery">#}
+{#                    <p>Express delivery</p>#}
+{#                    <p>1 business day</p>#}
+{#                    <p>$10.00</p>#}
+{#                </div>#}
+{#                <hr>#}
+{#                <div class="delivery">#}
+{#                    <p>Pick up in store</p>#}
+{#                    <p>1-3 business days</p>#}
+{#                    <p>Free</p>#}
+{#                </div>#}
+            </div>
+        </div>
+    </section>
+
+    <!-- script tags -->
+    <script src="{% static 'js/ditail.js' %}"></script>
+
+{% endblock %}

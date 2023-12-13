@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+	
+	<section id="form"><!--form-->
+		<div class="container">
+			<div class="row">
+
+				<div class="col-sm-4 col-sm-offset-1">
+					<div class="login-form"><!--login form-->
+						<h2>Login to your account</h2>
+						<form method="post" action="{% url 'users:login' %}">
+                            {% csrf_token %}
+							<input type="text" name="username" id="typeEmailX" placeholder="Username" />
+                            <label for="typeEmailX"></label>
+							<input type="password" name="password" id="typePasswordX" placeholder="Password" />
+                            <label for="typePasswordX"> </label>
+							<span>
+								<input type="checkbox" class="checkbox"> 
+								Keep me signed in
+							</span>
+							<button  type="submit" class="btn btn-default">Login</button>
+						</form>
+					</div><!--/login form-->
+				</div>
+				<div class="col-sm-1">
+					<h2 class="or">OR</h2>
+				</div>
+
+				<div class="col-sm-4">
+                    <div class="signup-form">
+                    <h2>New User Signup!</h2>
+                    </div>
+                    {% for form in forms %}
+					<div class="signup-form"><!--sign up form-->
+
+
+
+						<form method="post" action="#">
+                            {% csrf_token %}
+
+                            <label for="{{ form.id_for_label }}">{{ form.label }}</label>{{ form }}
+                            <div class="form-error">{{ f.errors }}</div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn-default">Signup</button>
+{#                            <input type="text" placeholder="{{ form.label }}"/>#}
+{#							<input type="email" placeholder="Email Address"/>#}
+{#							<input type="password" placeholder="Password"/>#}
+{#                          <button type="submit" class="btn btn-default">Signup</button>#}
+                    </form>
+
+					</div><!--/sign up form-->
+
+
+				</div>
+
+			</div>
+		</div>
+	</section><!--/form-->
+	
+{% endblock %}
